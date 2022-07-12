@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+
+.table-wrapper{
+    width: 100%;
+    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+    background-color: transparent;
+}
+
+.fl-table {
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: transparent;
+    
+}
+
+.fl-table td, .fl-table th {
+    text-align: center;
+    padding: 5px;
+    background-color: transparent;
+    color: white;
+
+    
+}
+.fl-table tr{
+    background-color: transparent;
+   
+}
+
+.fl-table td {
+    border-right: 1px solid #f8f8f8;
+    font-size: 16px;
+    background-color: transparent;
+   
+}
+.fl-table thead {
+    background-color: transparent;
+    
+}
+
+
+.fl-table thead th{
+    color: #ffffff;
+    background: #0A0E26;
+
+}
+
+.fl-table tbody{
+    background-color: transparent;
+}
+
+
+/* Responsive */
+@media (max-width: 767px) {
+    .fl-table {
+        display: block;
+        width: 100%;
+        white-space: normal;
+    }
+    .table-wrapper:before {
+        content: "Scroll horizontally >";
+        display: block;
+        text-align: right;
+        font-size: 11px;
+        color: white;
+        padding: 0 0 10px;
+    }
+    .fl-table thead,
+    .fl-table tbody,
+    .fl-table thead th {
+        display: block;
+    }
+    .fl-table thead th:last-child {
+        border-bottom: none;
+    }
+    .fl-table thead {
+        float: left;
+    }
+    .fl-table tbody {
+        width: auto;
+        position: relative;
+        overflow-x: auto;
+    }
+    .fl-table td,
+    .fl-table th {
+        padding: 20px 0.625em 0.625em 0.625em;
+        height: 60px;
+        vertical-align: middle;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 120px;
+        font-size: 13px;
+        text-overflow: ellipsis;
+    }
+    .fl-table thead th {
+        text-align: left;
+        border-bottom: 1px solid #f7f7f9;
+        height: 70px;
+    }
+    .fl-table tbody tr {
+        display: table-cell;
+        
+    }
+    .fl-table tbody tr:nth-child(odd) {
+        background: none;
+    }
+    .fl-table tr {
+        background: transparent;
+    }
+    .fl-table tr td {
+        background: transparent;
+        border-right: 1px solid #e6e4e4;
+        
+    }
+    .fl-table tbody td {
+        display: block;
+        text-align: center;
+        width: 200px;
+        height: 70px;
+    }
+}
+
+</style>
+<div class="tournament-main">
+    <div class="temp">
+        <div class="tournament-header">
+           
+            <br>
+           <br><br>
+ 
+            <img src=" {{ object.dp.url }}" alt="">
+                <br>
+                <h1 class="bgcolor bg-transparent">Name: {{ object }}</h1>
+                <p class="bgcolor bg-transparent">InGame Name: {{ object.ign}} </p>
+              
+                <p class="bgcolor bg-transparent">Number of Team registered: {{ teams|length}}</p>
+                <p class="bgcolor bg-transparent">Number of Tournament participation: {{ object.tournament_set.all|length}}</p>
+                
+
+               
+        </div>
+        <br><br><br><br><br>
+        
+        <br>
+        <br><br><br>
+        <div class="team-matches">
+            <h1 class="bgcolor bg-transparent"
+            style="background:transparent; color:white; letter-spacing: 2px; padding-bottom: 50px;">Your Teams</h1>
+            <div class="table-wrapper">
+                <table class="fl-table">
+                    <thead>
+                        <tr>
+                            <th>Team Name</th>
+                            <th>Tag</th>
+                            <th> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</th>
+                            <th> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</th>
+                            <th>Players</th>
+                            <th> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</th>
+                            <th> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</th>
+                        </tr>
+                    </thead>
+          
+
+ 
+                    {%for team in teams %}
+                    <tr>
+                        <td><a href="{%url 'team' team.id %}">{{ team.name }}</a></td>
+                        <td>{{ team.tag }}</td>
+                        {%for player in team.players.all %}
+                        <td><a href="{%url 'user' player.id %}">{{ player }}</a></td>
+                        {% endfor %}
+                    
+
+                    </tr>
+                    {% endfor %}
+                    <tbody>
+                    </table>
+                </div>
+                    
+        </div>
+        <br><br><br><br><br>
+        {% if user.is_organizer %}
+        <div class="team-matches">
+
+            <h1 class="bgcolor bg-transparent"
+                style="background:transparent; color:white; letter-spacing: 2px; padding-bottom: 50px;">Your Tournaments</h1>
+                <div class="table-wrapper">
+                    <table class="fl-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Teams</th>
+
+                                <th>Prizepool</th>
+
+                                <th>game</th>
+                                
+                                <th>winner</th>
+                            
+
+                            </tr>
+                        </thead>
+
+            {%for tournament in user.tournament_set.all %}
+            <tr>
+                <td><a href="{% url 'tournament' tournament.id %}">{{ tournament.name}}</a></td>
+                <td>{{ tournament.teams|length}}</td>
+                <td>{{ tournament.prizepool}}</td>
+                <td>{{ tournament.game}}</td>
+                
+                <td>{{ tournament.winner }}</td>
+
+            </tr>
+            {% endfor %}
+            <tbody>
+            </table>
+        </div>
+        </div>
+        <br><br><br><br><br>
+        {% endif %}
+        
+        <div class="team-matches">
+
+            <h1 class="bgcolor bg-transparent"
+                style="background:transparent; color:white; letter-spacing: 2px; padding-bottom: 50px;">Your Matches</h1>
+                <div class="table-wrapper">
+                    <table class="fl-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+
+                                <th>Teams</th>
+
+                                <th>Winner</th>
+
+                            </tr>
+                        </thead>
+
+                            {%for match in matches %}
+                            <tr>
+                                <td>{{ match.start_time|date:"M d, Y"}}</td>
+                                <td>{{ match.start_time|time }}</td>
+
+                                <td>
+                                        {% if match.team_1 %}
+                                        <a href="{% url 'team' match.team_1.id %}">{{ match.team_1 }}</a> 
+                                        {% else %}
+                                        None
+                                        {% endif %}
+                        
+                                     vs {% if match.team_2 %}
+                                    <a href="{% url 'team' match.team_2.id %}">{{ match.team_2 }}</a> 
+                                    {% else %} 
+                                    None 
+                                    {% endif %}
+                                </td>
+                                <td>{{ match.winner }}</td>
+
+                            </tr>
+            {% endfor %}
+            <tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+    <br><br>
+</div>
+</div>
+
+{% endblock %}

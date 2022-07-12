@@ -1,0 +1,282 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/c49e483aa3.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static '../static/css/team.css'%}">
+    <link rel="stylesheet" href="{% static '../static/css/style.css'%}">
+    <link name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>{{title}}</title>
+</head>
+<style>
+    .table-wrapper{
+    width: 100%;
+    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+    background-color: transparent;
+}
+
+.fl-table {
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: transparent;
+    
+}
+
+.fl-table td, .fl-table th {
+    text-align: center;
+    padding: 5px;
+    background-color: transparent;
+    color: white;
+
+    
+}
+.fl-table tr{
+    background-color: transparent;
+   
+}
+
+.fl-table td {
+    border-right: 1px solid #f8f8f8;
+    font-size: 16px;
+    background-color: transparent;
+   
+}
+.fl-table thead {
+    background-color: transparent;
+    
+}
+
+
+.fl-table thead th{
+    color: #ffffff;
+    background: #0A0E26;
+
+}
+
+.fl-table tbody{
+    background-color: transparent;
+}
+
+
+/* Responsive */
+@media (max-width: 767px) {
+    .fl-table {
+        display: block;
+        width: 100%;
+        white-space: normal;
+    }
+    .table-wrapper:before {
+        content: "Scroll horizontally >";
+        display: block;
+        text-align: right;
+        font-size: 11px;
+        color: white;
+        padding: 0 0 10px;
+    }
+    .fl-table thead,
+    .fl-table tbody,
+    .fl-table thead th {
+        display: block;
+    }
+    .fl-table thead th:last-child {
+        border-bottom: none;
+    }
+    .fl-table thead {
+        float: left;
+    }
+    .fl-table tbody {
+        width: auto;
+        position: relative;
+        overflow-x: auto;
+    }
+    .fl-table td,
+    .fl-table th {
+        padding: 20px 0.625em 0.625em 0.625em;
+        height: 60px;
+        vertical-align: middle;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 120px;
+        font-size: 13px;
+        text-overflow: ellipsis;
+    }
+    .fl-table thead th {
+        text-align: left;
+        border-bottom: 1px solid #f7f7f9;
+        height: 70px;
+    }
+    .fl-table tbody tr {
+        display: table-cell;
+        
+    }
+    .fl-table tbody tr:nth-child(odd) {
+        background: none;
+    }
+    .fl-table tr {
+        background: transparent;
+    }
+    .fl-table tr td {
+        background: transparent;
+        border-right: 1px solid #e6e4e4;
+        
+    }
+    .fl-table tbody td {
+        display: block;
+        text-align: center;
+        width: 200px;
+        height: 70px;
+    }
+}
+    @media (max-width: 767px) {
+        .team-members{
+            flex-direction: column;
+            height: unset;
+            align-items: center;
+            justify-items: center;
+        }
+        .team-member{
+            text-align: center;
+          
+            
+        }
+        
+    }
+</style>
+
+<body>
+    {% include 'nav.html' %}
+    <div class="tournament-main">
+        <div class="temp">
+            <!--Background Image-->
+          
+                <!--NavBar-->
+
+                
+                <div class="tournament-header">
+                    <br><br><br><br><br>
+                    <img src="{{ object.logo.url }}" alt="">
+                    <br><br>
+                    <h1 class="bgcolor bg-transparent">Team Name: {{ object.name }}
+                    </h1>
+                    <h2 class="bgcolor bg-transparent">Team tag: {{ object.tag }}</h2>
+                    <h2 class="bgcolor bg-transparent">Tournaments: 
+                        {% if object.tournament_set.all %}
+                        {% for i in object.tournament_set.all %} 
+                        <a style=" background: transparent; color: whitesmoke; " href= "{% url 'tournament' i.id %} ">{{ i }}</a> 
+                        {% endfor %}
+                        {% else %}
+                        None
+                        {% endif %}
+
+                    </h2> 
+                    <p class="bgcolor bg-transparent">Description:{{ object.team_description }}
+                    </p>
+
+                    <h1 class="bgcolor bg-transparent">Team members
+                    </h1>
+
+
+
+
+                </div>
+           
+
+            <!-- Team members  -->
+            <br><br><br><br><br>
+            <div class="team-members">
+                {% for player in object.players.all %}
+                <div class="team-member">
+                    <a href="{%url 'user' player.id %}" class=" text-white bg-transparent "><img src="{{ player.dp.url }}" class=" bg-transparent"></a>
+                    <br><br>
+                    <h4 class=" text-white bg-transparent "><a href="{%url 'user' player.id %}" class=" text-white bg-transparent ">Name: {{ player }}</a></h4>
+                    <h5 class=" text-white bg-transparent ">IGN: {{ object.tag }} {{ player.ign }}</h5>
+                </div>
+                {% endfor %}
+            </div>
+
+
+            
+            <div class="team-matches">
+                
+                <h1 class="bgcolor bg-transparent" style="background:transparent; color:white; letter-spacing: 2px; padding-bottom: 50px;">Matches</h1>
+                <div class="table-wrapper">
+                    <table class="fl-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Tournament</th>
+                                <th>Teams</th>
+                    
+                                <th>Winner</th>
+                        </tr>
+                    </thead>
+                    
+                    {%for match in matches%}
+                    <tr>
+                        {% if match.start_time %}
+                        <td>{{ match.start_time|date:"M d, Y"}}</td>
+                        <td>{{ match.start_time|time }}</td>
+                        {% else %}
+                        <td>Wait For orgoizer to provide</td>
+                        <td>Wait For orgoizer to provide</td>
+                        <td><a href="{% url 'tournament' match.tournament.first.id %}">{{ match.tournament.first }}</a></td>
+                        {% endif %}
+                        <td>{% if match.team_1 == object %}
+                            {% if match.team_2 %}
+                            <a href="{% url 'team' match.team_2.id %}">{{ match.team_2 }}</a>
+                            {% else %}
+                            <a>None</a>
+                            {% endif %}
+                            
+                            {% else %}
+                            {% if match.team_1 %}
+                            <a href="{% url 'team' match.team_1.id %}">{{ match.team_1 }}</a>
+                            {% else %}
+                            <a>None</a>
+                            {% endif %}
+                            
+                            {% endif %}
+                        </td>
+                        <td>{{ match.winner }}</td>
+
+                    
+                    {% endfor %}
+                </tr>
+                <tbody>
+                </table>
+            </div>
+                
+            </div>
+
+
+
+        </div>
+        </div>
+    
+</body>
+
+</html>
